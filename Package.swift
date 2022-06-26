@@ -12,7 +12,7 @@ let package = Package(
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "PopH264",
-            targets: ["PopH264","PopH264_xcframework"]),
+            targets: ["PopH264"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -22,16 +22,10 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
 		.binaryTarget(
-			name: "PopH264_xcframework",
-			path: "PopH264.xcframework"
+			name: "PopH264",
+			url: "https://github.com/NewChromantics/PopH264/releases/download/v1.3.40/PopH264.xcframework.zip",
+			checksum: "2c5b6909af662dc5a2c953e347a8ba83a69143f2c6876fcff63e27fc40b883c5"
 		),
-        .target(
-            name: "PopH264",
-            dependencies: []
-		),
-        .testTarget(
-            name: "PopH264Tests",
-            dependencies: ["PopH264"]
-		),
+        
     ]
 )
