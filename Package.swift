@@ -23,8 +23,8 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
 		.binaryTarget(
 			name: "PopH264",
-			url: "https://github.com/NewChromantics/PopH264/releases/download/v1.3.40/PopH264.xcframework.zip",
-			checksum: "2c5b6909af662dc5a2c953e347a8ba83a69143f2c6876fcff63e27fc40b883c5"
+			url: "https://github.com/NewChromantics/PopH264/releases/download/v1.3.41/PopH264.xcframework.zip",
+			checksum: "8a378470a2ab720f2ee6ecf4e7a5e202a3674660c31e43d95d672fe76d61d68c"
 		),
         
     ]
