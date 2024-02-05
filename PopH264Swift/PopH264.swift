@@ -63,9 +63,9 @@ public class PopH264Instance
 		}
 	}
 	
-	public func PushData(data:Data)
+	public func PushData(data:Data,frameNumber:Int32)
 	{
-		instanceWrapper.push(data)
+		instanceWrapper.push(data,frameNumber: frameNumber)
 	}
 	
 	public func PushEndOfFile()
@@ -87,7 +87,7 @@ public class PopH264Instance
 		{
 			//var StateJson = try instanceWrapper.getDecoderStateJson()
 			var StateJson = try instanceWrapper.peekNextFrameJson()
-			print(StateJson)
+			//print(StateJson)
 			
 			
 			let StateJsonData = StateJson.data(using: .utf8)!

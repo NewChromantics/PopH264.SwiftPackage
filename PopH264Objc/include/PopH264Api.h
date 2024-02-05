@@ -27,7 +27,7 @@
 //- (NSString*__nonnull)getDecoderStateJson:(NSError**)throwError __attribute__((swift_error(nonnull_error)));
 - (NSString*__nonnull)peekNextFrameJson:(NSError**)throwError __attribute__((swift_error(nonnull_error)));
 - (int)popNextFrame;
-- (void)pushData:(NSData*__nonnull)data;
+- (void)pushData:(NSData*__nonnull)data frameNumber:(int32_t)frameNumber;
 - (void)pushEndOfFile;
 
 @end
@@ -36,5 +36,3 @@
 DLL_EXPORT NSString*__nonnull PopH264_GetVersion_NSString();
 DLL_EXPORT int PopH264_AllocDecoder(NSString*__nullable Filename);
 DLL_EXPORT void PopH264_FreeDecoder(int Instance);
-//DLL_EXPORT NSString*__nonnull PopH264_GetDecoderStateJson(int Instance);
-DLL_EXPORT NSString*__nonnull PopH264_PeekFrameJson(int Instance);

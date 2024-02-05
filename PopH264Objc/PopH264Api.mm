@@ -7,12 +7,18 @@
 #import <Foundation/Foundation.h>
 #include <array>
 #include <iostream>
+#include <mutex>	//	scoped_lock
+
+
+NSString*__nonnull PopH264_PeekFrameJson(int Instance,std::vector<char>& JsonBuffer);
 
 
 
 @implementation PopH264DecoderWrapper
 {
-	int instance;
+	int					instance;
+	std::vector<char>	jsonBuffer;		//	allocate once!
+	std::mutex			jsonBufferLock;	//	just in case something calls class this multiple times
 }
 
 - (id)init
@@ -82,7 +88,10 @@
 	{
 		@try
 		{
-			return PopH264_PeekFrameJson(instance);
+			//	gr: cant set c++20 in swiftpackage!
+			//std::scoped_lock Lock(jsonBufferLock);
+			std::lock_guard<std::mutex> lock(jsonBufferLock);
+			return PopH264_PeekFrameJson(instance, jsonBuffer);
 		}
 		@catch (NSException* exception)
 		{
@@ -102,12 +111,11 @@
 	return PopH264_PopFrame( instance, nullptr, 0, nullptr, 0, nullptr, 0 );
 }
 
-- (void)pushData:(NSData*__nonnull)data
+- (void)pushData:(NSData*__nonnull)data frameNumber:(int32_t)frameNumber
 {
-	int32_t FrameNumber = 0;
 	//uint8_t* DataAddress = reinterpret_cast<uint8_t*>(data.bytes);
 	uint8_t* DataAddress = (uint8_t*)data.bytes;
-	PopH264_PushData( instance, DataAddress, data.length, FrameNumber);
+	PopH264_PushData( instance, DataAddress, data.length, frameNumber);
 }
 
 - (void)pushEndOfFile
@@ -207,9 +215,10 @@ DLL_EXPORT NSString*__nonnull PopMp4_GetDecodeStateJson(int Instance)
 	return Json;
 }
 */
-DLL_EXPORT NSString*__nonnull PopH264_PeekFrameJson(int Instance)
+
+NSString*__nonnull PopH264_PeekFrameJson(int Instance,std::vector<char>& JsonBuffer)
 {
-	std::vector<char> JsonBuffer(50*1024*1024);
+	JsonBuffer.resize(2*1024*1024);
 	PopH264_PeekFrame( Instance, JsonBuffer.data(), JsonBuffer.size() );
 	
 	auto Length = std::strlen(JsonBuffer.data());
