@@ -22,7 +22,7 @@
 @property int instance;
 
 - (id)init;
-- (void)allocateWithFilename:(NSString*)Filename error:(NSError**)throwError __attribute__((swift_error(nonnull_error)));
+- (void)allocate:(NSError**)throwError __attribute__((swift_error(nonnull_error)));
 - (void)free;
 //- (NSString*__nonnull)getDecoderStateJson:(NSError**)throwError __attribute__((swift_error(nonnull_error)));
 - (NSString*__nonnull)peekNextFrameJson:(NSError**)throwError __attribute__((swift_error(nonnull_error)));
@@ -34,5 +34,5 @@
 
 //	some objective-c wrappers to the CAPI
 DLL_EXPORT NSString*__nonnull PopH264_GetVersion_NSString();
-DLL_EXPORT int PopH264_AllocDecoder(NSString*__nullable Filename);
+DLL_EXPORT int PopH264_AllocDecoder();
 DLL_EXPORT void PopH264_FreeDecoder(int Instance);

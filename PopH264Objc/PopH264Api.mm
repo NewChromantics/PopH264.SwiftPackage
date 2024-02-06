@@ -28,14 +28,14 @@ NSString*__nonnull PopH264_PeekFrameJson(int Instance,std::vector<char>& JsonBuf
 	return self;
 }
 
-- (void)allocateWithFilename:(NSString*)Filename error:(NSError**)throwError __attribute__((swift_error(nonnull_error)))
+- (void)allocate:(NSError**)throwError __attribute__((swift_error(nonnull_error)))
 {
 	*throwError = nil;
 	try
 	{
 		@try
 		{
-			instance = PopH264_AllocDecoder(Filename);
+			instance = PopH264_AllocDecoder();
 		}
 		@catch (NSException* exception)
 		{
@@ -156,14 +156,13 @@ DLL_EXPORT NSString* PopH264_GetVersion_NSString()
 }
 
 
-DLL_EXPORT int PopH264_AllocDecoder(NSString* Filename)
+DLL_EXPORT int PopH264_AllocDecoder()
 {
 	std::vector<char> ErrorBuffer(100*1024);
 
 	//	gr: poph264 doesnt have a file loader
 	NSDictionary* Options =
 	@{
-		@"Filename" : Filename,
 	};
 	NSData* OptionsJsonData = [NSJSONSerialization dataWithJSONObject:Options options:NSJSONWritingPrettyPrinted error:nil];
 	NSString* OptionsJsonString = [[NSString alloc] initWithData:OptionsJsonData encoding:NSUTF8StringEncoding];

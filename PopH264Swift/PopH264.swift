@@ -48,12 +48,12 @@ public class PopH264Instance
 	var instanceWrapper : PopH264DecoderWrapper
 	var allocationError : String?
 
-	public init(Filename:String)
+	public init()
 	{
 		do
 		{
 			instanceWrapper = PopH264DecoderWrapper()
-			try instanceWrapper.allocate(withFilename: Filename)
+			try instanceWrapper.allocate()
 			var Version = PopH264_GetVersion_NSString()
 			print("Allocated instance \(instanceWrapper); PopH264 version \(Version)")
 		}
